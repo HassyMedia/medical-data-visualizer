@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 
 # Load the data
 df = pd.read_csv('medical_examination.csv')
@@ -31,4 +32,13 @@ df_clean = df[
     (df['weight'] <= df['weight'].quantile(0.975))
 ]
 
+# Draw Heat Map
+def draw_heat_map():
+    corr = df_clean.corr()
+    mask = np.triu(np.ones_like(corr, dtype=bool))
+    sns.heatmap(corr, mask=mask, annot=True, fmt=".1f")
+    plt.savefig('heatmap.png')
 
+draw_heat_map()
+
+plt.show(block=True)
