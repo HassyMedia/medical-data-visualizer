@@ -12,3 +12,13 @@ df['overweight'] = (df['weight'] / (df['height'] / 100) ** 2 > 25).astype(int)
 df['cholesterol'] = (df['cholesterol'] > 1).astype(int)
 df['gluc'] = (df['gluc'] > 1).astype(int)
 
+# Convert data to long format
+df_long = pd.melt(df, id_vars=['cardio'], value_vars=['cholesterol', 'gluc', 'smoke', 'alco', 'active', 'overweight'])
+
+# Draw Categorical Plot
+def draw_cat_plot():
+    sns.catplot(x="variable", hue="value", col="cardio", data=df_long, kind="count")
+    plt.savefig('catplot.png')
+
+draw_cat_plot()
+
